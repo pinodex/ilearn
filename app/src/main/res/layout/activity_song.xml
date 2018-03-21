@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ph.edu.stinovaliches.ilearn.rhymes.SongActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/parallax_background_blur" />
+
+    <include
+        android:id="@+id/header"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/layout_page_header_alternative" />
+
+    <EditText
+        android:id="@+id/lyrics"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_above="@id/player_control"
+        android:textSize="20dp"
+        android:focusable="false"
+        android:clickable="false"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:id="@+id/player_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="#5000"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Lorem Ipsum"
+            android:textSize="20sp"
+            android:textColor="#fff" />
+
+        <ImageView
+            android:id="@+id/control_button"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_media_play"/>
+    </LinearLayout>
+</RelativeLayout>

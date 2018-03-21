@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">iLearn</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="help_letters_activity">
+        <![CDATA[
+        Welcome to the alphabet! \n\n
+
+        Select a letter to learn an object that starts with that letter.
+        ]]>
+    </string>
+    <string name="help_view_letter_activity">Shake your device to reveal the object!</string>
+    <string name="help_numbers_activity">Count the objects from one to ten.</string>
+    <string name="help_rhymes_activity">
+        <![CDATA[
+        Listen to nursery rhymes! \n\n
+
+        Select a song and sing together with the lyrics on-screen
+        ]]>
+    </string>
+    <string name="help_song_activity">
+        Sing together with the lyrics on-screen. Use the button below to play and pause the music.
+    </string>
+    <string name="about_this_application">About This Application</string>
+    <string name="about_this_application_content">
+        <![CDATA[
+            This application is part of a project for Mobile Development subject at STI College Novaliches.
+
+            \n\nThe following are the group members:\n\n
+
+            - A\n
+            - B
+        ]]>
+    </string>
+</resources>

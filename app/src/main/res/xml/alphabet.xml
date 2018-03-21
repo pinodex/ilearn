@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alphabet>
+    <entry letter="A" word="Apple" picture="apple.png" />
+    <entry letter="B" word="Ball" picture="ball.png" />
+    <entry letter="C" word="Cat" picture="cat.png" />
+    <entry letter="D" word="Dog" picture="dog.png" />
+    <entry letter="E" word="Eggplant" picture="eggplant.png" />
+    <entry letter="F" word="Flower" picture="flower.png" />
+    <entry letter="G" word="Grapes" picture="grapes.png" />
+    <entry letter="H" word="Hat" picture="hat.png" />
+    <entry letter="I" word="Ice Cream" picture="ice_cream.png" />
+    <entry letter="J" word="Jar" picture="jar.png" />
+    <entry letter="K" word="Kite" picture="kite.png" />
+    <entry letter="L" word="Lion" picture="lion.png" />
+    <entry letter="M" word="Mango" picture="mango.png" />
+    <entry letter="N" word="Nose" picture="nose.png" />
+    <entry letter="O" word="Octopus" picture="octopus.png" />
+    <entry letter="P" word="Pencil" picture="pencil.png" />
+    <entry letter="Q" word="Queen" picture="queen.png" />
+    <entry letter="R" word="Rainbow" picture="rainbow.png" />
+    <entry letter="S" word="Sun" picture="sun.png" />
+    <entry letter="T" word="Tree" picture="tree.png" />
+    <entry letter="U" word="Umbrella" picture="umbrella.png" />
+    <entry letter="V" word="Violin" picture="violin.png" />
+    <entry letter="W" word="Watch" picture="watch.png" />
+    <entry letter="X" word="Xylophone" picture="xylophone.png" />
+    <entry letter="Y" word="Yarn" picture="yarn.png" />
+    <entry letter="Z" word="Zebra" picture="zebra.png" />
+</alphabet>
