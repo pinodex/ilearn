@@ -3,6 +3,8 @@
     package="ph.edu.stinovaliches.ilearn">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +26,8 @@
         <activity android:name=".rhymes.RhymesActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".rhymes.SongActivity" />
-        <activity android:name=".letters.ViewLetterActivity"/>
+        <activity android:name=".letters.ViewLetterActivity" />
+        <activity android:name=".reading.ReadingActivity"></activity>
     </application>
 
 </manifest>

@@ -36,6 +36,8 @@ public class ViewLetterActivity extends BaseActivity {
 
     Typeface typeface;
 
+    ShakeDetector sd;
+
     SfxManager sfx = SfxManager.getInstance();
 
     private boolean isRevealed = false;
@@ -83,9 +85,16 @@ public class ViewLetterActivity extends BaseActivity {
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        ShakeDetector sd = new ShakeDetector(new OnShakeListener());
 
+        sd = new ShakeDetector(new OnShakeListener());
         sd.start(sensorManager);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        sd.stop();
     }
 
     private class OnShakeListener implements ShakeDetector.Listener {

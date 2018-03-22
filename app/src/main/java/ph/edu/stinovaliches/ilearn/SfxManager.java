@@ -39,6 +39,8 @@ public class SfxManager {
         sfxMap.put("next", R.raw.click1);
         sfxMap.put("reveal1", R.raw.reveal1);
         sfxMap.put("reveal2", R.raw.reveal2);
+        sfxMap.put("game_start", R.raw.game_start);
+        sfxMap.put("game_coin", R.raw.game_coin);
     }
 
     public static void initialize(Context context) {

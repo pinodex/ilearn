@@ -21,6 +21,9 @@
     <string name="help_song_activity">
         Sing together with the lyrics on-screen. Use the button below to play and pause the music.
     </string>
+    <string name="help_reading_activity">
+        Repeat the words shown on screen. Internet connection is required for this to function.
+    </string>
     <string name="about_this_application">About This Application</string>
     <string name="about_this_application_content">
         <![CDATA[

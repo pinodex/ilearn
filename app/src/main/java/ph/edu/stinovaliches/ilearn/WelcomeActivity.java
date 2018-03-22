@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import ph.edu.stinovaliches.ilearn.letters.LettersActivity;
 import ph.edu.stinovaliches.ilearn.numbers.NumbersActivity;
+import ph.edu.stinovaliches.ilearn.reading.ReadingActivity;
 import ph.edu.stinovaliches.ilearn.rhymes.RhymesActivity;
 
 public class WelcomeActivity extends BaseActivity {
@@ -28,11 +30,13 @@ public class WelcomeActivity extends BaseActivity {
 
     ImageView menuImage;
     SfxManager sfx;
+    TtsManager tts;
 
     {
         menuMap.put(-16777216, LettersActivity.class);
         menuMap.put(-15658735, NumbersActivity.class);
         menuMap.put(-14342875, RhymesActivity.class);
+        menuMap.put(-13224394, ReadingActivity.class);
         menuMap.put(-11184811, AboutActivity.class);
     }
 
@@ -57,6 +61,8 @@ public class WelcomeActivity extends BaseActivity {
 
         SfxManager.initialize(this);
         sfx = SfxManager.getInstance();
+
+        TtsManager.initialize(this);
 
         // Animate intro
 
@@ -102,6 +108,8 @@ public class WelcomeActivity extends BaseActivity {
 
             if (action == MotionEvent.ACTION_UP) {
                 int touchColor = getHotspotColor(R.id.menu_image_mask, x, y);
+
+                Log.d("TOUCHED", "Color: " + touchColor);
 
                 Class nextActivity = menuMap.get(touchColor);
 

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import ph.edu.stinovaliches.ilearn.letters.LettersActivity;
 import ph.edu.stinovaliches.ilearn.letters.ViewLetterActivity;
 import ph.edu.stinovaliches.ilearn.numbers.NumbersActivity;
+import ph.edu.stinovaliches.ilearn.reading.ReadingActivity;
 import ph.edu.stinovaliches.ilearn.rhymes.RhymesActivity;
 import ph.edu.stinovaliches.ilearn.rhymes.SongActivity;
 
@@ -66,6 +67,10 @@ public class BaseActivity extends AppCompatActivity {
 
         if (getClass() == SongActivity.class) {
             showHelpDialog(R.string.help_song_activity);
+        }
+
+        if (getClass() == ReadingActivity.class) {
+            showHelpDialog(R.string.help_reading_activity);
         }
     }
 
