@@ -1,5 +1,6 @@
 package ph.edu.stinovaliches.ilearn.reading;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -23,6 +24,8 @@ import ph.edu.stinovaliches.ilearn.BaseActivity;
 import ph.edu.stinovaliches.ilearn.R;
 import ph.edu.stinovaliches.ilearn.SfxManager;
 import ph.edu.stinovaliches.ilearn.TtsManager;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.speech.SpeechRecognizer.RESULTS_RECOGNITION;
 
@@ -53,6 +56,14 @@ public class ReadingActivity extends BaseActivity {
         setContentView(R.layout.activity_reading);
 
         setHeaderListeners();
+
+        if (!hasRecordAudioPermission()) {
+            new AppSettingsDialog.Builder(this).build().show();
+
+            finish();
+
+            return;
+        }
 
         try {
             XmlPullParser list = getResources().getXml(
@@ -93,9 +104,15 @@ public class ReadingActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        speechRecognizer.stopListening();
+        if (speechRecognizer != null) {
+            speechRecognizer.stopListening();
 
-        speechRecognizer.destroy();
+            speechRecognizer.destroy();
+        }
+    }
+
+    private boolean hasRecordAudioPermission() {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.RECORD_AUDIO);
     }
 
     private void getNewWord() {

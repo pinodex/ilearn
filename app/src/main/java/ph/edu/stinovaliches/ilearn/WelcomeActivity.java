@@ -79,6 +79,8 @@ public class WelcomeActivity extends BaseActivity {
         }, 2000);
 
         menuImage.setOnTouchListener(new MenuOnTouchListener());
+
+        requestPermissions();
     }
 
     @Override
@@ -108,8 +110,6 @@ public class WelcomeActivity extends BaseActivity {
 
             if (action == MotionEvent.ACTION_UP) {
                 int touchColor = getHotspotColor(R.id.menu_image_mask, x, y);
-
-                Log.d("TOUCHED", "Color: " + touchColor);
 
                 Class nextActivity = menuMap.get(touchColor);
 

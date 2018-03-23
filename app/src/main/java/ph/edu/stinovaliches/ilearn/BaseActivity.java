@@ -1,5 +1,7 @@
 package ph.edu.stinovaliches.ilearn;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,16 +9,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import java.util.List;
+
 import ph.edu.stinovaliches.ilearn.letters.LettersActivity;
 import ph.edu.stinovaliches.ilearn.letters.ViewLetterActivity;
 import ph.edu.stinovaliches.ilearn.numbers.NumbersActivity;
 import ph.edu.stinovaliches.ilearn.reading.ReadingActivity;
 import ph.edu.stinovaliches.ilearn.rhymes.RhymesActivity;
 import ph.edu.stinovaliches.ilearn.rhymes.SongActivity;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
     SfxManager sfx = SfxManager.getInstance();
+
+    String[] perms = { Manifest.permission.RECORD_AUDIO };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,51 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> list) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, list)) {
+            new AppSettingsDialog.Builder(this).build().show();
+
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Permission Request Denied");
+        builder.setMessage("Some features may not work correctly.");
+
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    public void requestPermissions() {
+        if (!EasyPermissions.hasPermissions(this, perms)) {
+            EasyPermissions.requestPermissions(this,
+                    "iLearn requires access to microphone", 110, perms);
+        }
     }
 
     public void enterImmersiveMode() {
