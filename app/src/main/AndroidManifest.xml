@@ -27,7 +27,7 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".rhymes.SongActivity" />
         <activity android:name=".letters.ViewLetterActivity" />
-        <activity android:name=".reading.ReadingActivity"></activity>
+        <activity android:name=".reading.ReadingActivity"/>
     </application>
 
 </manifest>

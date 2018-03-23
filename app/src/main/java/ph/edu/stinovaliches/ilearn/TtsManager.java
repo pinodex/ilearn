@@ -2,6 +2,7 @@ package ph.edu.stinovaliches.ilearn;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 /**
  * Created by raphm on 22/03/2018.
@@ -35,8 +36,16 @@ public class TtsManager {
         return initialized;
     }
 
-    public TextToSpeech getTts() {
-        return tts;
+    public void speak(String message, boolean block) {
+        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+
+        while (block && tts.isSpeaking()) {
+            // Block the thread. Async sucks
+        }
+    }
+
+    public void speak(String message) {
+        speak(message, true);
     }
 
     private class TtsOnInitListener implements TextToSpeech.OnInitListener {

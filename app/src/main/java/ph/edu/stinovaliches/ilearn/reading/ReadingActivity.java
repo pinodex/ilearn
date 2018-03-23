@@ -5,10 +5,8 @@ import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.speech.tts.TextToSpeech;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,10 +31,12 @@ public class ReadingActivity extends BaseActivity {
     ViewGroup container;
     RelativeLayout playButtonContainer, wordContainer;
     ImageView playButton;
-    TextView txtWord;
+    TextView txtWord, txtScore;
+
+    ScoreManager scoreManager = ScoreManager.getInstance();
 
     SfxManager sfx = SfxManager.getInstance();
-    TextToSpeech tts = TtsManager.getInstance().getTts();
+    TtsManager tts = TtsManager.getInstance();
 
     SpeechRecognizer speechRecognizer;
 
@@ -77,6 +77,9 @@ public class ReadingActivity extends BaseActivity {
         wordContainer = findViewById(R.id.word_container);
         playButton = findViewById(R.id.play_button);
         txtWord = findViewById(R.id.word);
+        txtScore = findViewById(R.id.score);
+
+        txtScore.setText(scoreManager.getScoreString());
 
         playButton.setOnClickListener(new PlayButtonOnClickListener());
 
@@ -91,28 +94,32 @@ public class ReadingActivity extends BaseActivity {
         super.onDestroy();
 
         speechRecognizer.stopListening();
+
+        speechRecognizer.destroy();
     }
 
     private void getNewWord() {
+        incorrectAttempts = 0;
+
         int rIndex = random.nextInt(words.size());
 
         currentWord = words.get(rIndex);
 
         speakCurrentWord();
 
-        new Handler().postDelayed(() -> listenToWord(), 1000);
+        listenToWord();
     }
 
     private void speakCurrentWord() {
         txtWord.setText(currentWord);
 
-        tts.speak(currentWord, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(currentWord);
     }
 
     private void listenToWord() {
         Intent speechintent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-        speechintent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS , 1000);
+        speechintent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS , 500);
         speechintent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,  RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechintent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         speechintent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Repeat the word");
@@ -130,7 +137,7 @@ public class ReadingActivity extends BaseActivity {
 
             sfx.play("game_start");
 
-            tts.speak("Repeat after me.", TextToSpeech.QUEUE_ADD, null);
+            tts.speak("Repeat after me.", false);
 
             new Handler().postDelayed(() -> {
                 wordContainer.setVisibility(View.VISIBLE);
@@ -169,7 +176,30 @@ public class ReadingActivity extends BaseActivity {
 
         @Override
         public void onError(int i) {
-            Log.d("Error", i + "");
+            switch (i) {
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                case SpeechRecognizer.ERROR_NETWORK:
+                    tts.speak("I cannot hear you.");
+
+                    tts.speak("Say the word");
+
+                    incorrectAttempts++;
+
+                    if (incorrectAttempts >= 3) {
+                        getNewWord();
+
+                        return;
+                    }
+
+                    speakCurrentWord();
+
+                    listenToWord();
+
+                    break;
+            }
         }
 
         @Override
@@ -187,19 +217,21 @@ public class ReadingActivity extends BaseActivity {
                     return;
                 }
 
-                tts.speak("Say the word", TextToSpeech.QUEUE_ADD, null);
+                tts.speak("Say the word");
 
                 speakCurrentWord();
 
-                new Handler().postDelayed(() -> listenToWord(), 2000);
+                listenToWord();
 
                 return;
             }
 
-            incorrectAttempts = 0;
+            scoreManager.increment();
+
+            txtScore.setText(scoreManager.getScoreString());
 
             sfx.play("game_coin");
-            tts.speak("Correct!", TextToSpeech.QUEUE_ADD, null);
+            tts.speak("Correct!");
 
             getNewWord();
         }
