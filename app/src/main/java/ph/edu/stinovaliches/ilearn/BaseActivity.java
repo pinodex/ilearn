@@ -4,6 +4,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import ph.edu.stinovaliches.ilearn.letters.LettersActivity;
@@ -24,6 +25,8 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         enterImmersiveMode();
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -38,6 +41,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     public void enterImmersiveMode() {
